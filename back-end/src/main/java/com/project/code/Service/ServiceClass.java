@@ -1,26 +1,51 @@
 package com.project.code.Service;
 
+import com.project.code.Model.Inventory;
+import com.project.code.Model.Product;
+import com.project.code.Repo.InventoryRepository;
+import com.project.code.Repo.ProductRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ServiceClass {
-    
-// 1. **validateInventory Method**:
-//    - Checks if an inventory record exists for a given product and store combination.
-//    - Parameters: `Inventory inventory`
-//    - Return Type: `boolean` (Returns `false` if inventory exists, otherwise `true`)
 
-// 2. **validateProduct Method**:
-//    - Checks if a product exists by its name.
-//    - Parameters: `Product product`
-//    - Return Type: `boolean` (Returns `false` if a product with the same name exists, otherwise `true`)
+    private final ProductRepository productRepository;
+    private final InventoryRepository inventoryRepository;
 
-// 3. **ValidateProductId Method**:
-//    - Checks if a product exists by its ID.
-//    - Parameters: `long id`
-//    - Return Type: `boolean` (Returns `false` if the product does not exist with the given ID, otherwise `true`)
+    public ServiceClass(ProductRepository productRepository, InventoryRepository inventoryRepository) {
+        this.productRepository = productRepository;
+        this.inventoryRepository = inventoryRepository;
+    }
 
-// 4. **getInventoryId Method**:
-//    - Fetches the inventory record for a given product and store combination.
-//    - Parameters: `Inventory inventory`
-//    - Return Type: `Inventory` (Returns the inventory record for the product-store combination)
+    public boolean validateInventory(Inventory inventory) {
+        if (inventory == null || inventory.getProduct() == null || inventory.getStore() == null) return false;
+        if (inventory.getProduct().getId() == null || inventory.getStore().getId() == null) return false;
 
+        Inventory existing = inventoryRepository.findByProductIdandStoreId(
+                inventory.getProduct().getId(),
+                inventory.getStore().getId()
+        );
+        return existing == null;
+    }
+
+    public boolean validateProduct(Product product) {
+        if (product == null || product.getName() == null) return false;
+        Product existing = productRepository.findByName(product.getName());
+        return existing == null;
+    }
+
+    public boolean ValidateProductId(long id) {
+        Product p = productRepository.findById(id);
+        return p != null;
+    }
+
+    public Inventory getInventoryId(Inventory inventory) {
+        if (inventory == null || inventory.getProduct() == null || inventory.getStore() == null) return null;
+        if (inventory.getProduct().getId() == null || inventory.getStore().getId() == null) return null;
+
+        return inventoryRepository.findByProductIdandStoreId(
+                inventory.getProduct().getId(),
+                inventory.getStore().getId()
+        );
+    }
 }
