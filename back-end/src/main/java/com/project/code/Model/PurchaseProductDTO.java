@@ -1,54 +1,19 @@
 package com.project.code.Model;
 
-import jakarta.validation.constraints.NotNull;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-@Document(collection = "reviews")
-public class Review {
-
-    @Id
-    private String id;
-
-    @NotNull(message = "Customer cannot be null")
-    private Long customerId;
-
-    @NotNull(message = "Product cannot be null")
+public class PurchaseProductDTO {
     private Long productId;
+    private Integer quantity;
 
-    @NotNull(message = "Store cannot be null")
-    private Long storeId;
+    public PurchaseProductDTO() {}
 
-    @NotNull(message = "Rating cannot be null")
-    private Integer rating;
-
-    private String comment;
-
-    public Review() {}
-
-    public Review(Long customerId, Long productId, Long storeId, Integer rating, String comment) {
-        this.customerId = customerId;
+    public PurchaseProductDTO(Long productId, Integer quantity) {
         this.productId = productId;
-        this.storeId = storeId;
-        this.rating = rating;
-        this.comment = comment;
+        this.quantity = quantity;
     }
-
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
-
-    public Long getCustomerId() { return customerId; }
-    public void setCustomerId(Long customerId) { this.customerId = customerId; }
 
     public Long getProductId() { return productId; }
     public void setProductId(Long productId) { this.productId = productId; }
 
-    public Long getStoreId() { return storeId; }
-    public void setStoreId(Long storeId) { this.storeId = storeId; }
-
-    public Integer getRating() { return rating; }
-    public void setRating(Integer rating) { this.rating = rating; }
-
-    public String getComment() { return comment; }
-    public void setComment(String comment) { this.comment = comment; }
+    public Integer getQuantity() { return quantity; }
+    public void setQuantity(Integer quantity) { this.quantity = quantity; }
 }
