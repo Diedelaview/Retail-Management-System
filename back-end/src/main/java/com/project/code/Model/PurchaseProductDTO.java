@@ -1,52 +1,54 @@
 package com.project.code.Model;
 
+import jakarta.validation.constraints.NotNull;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-public class PurchaseProductDTO {
-    private Long id;
-    private String name;
-    private Double price;
-    private Integer quantity;
-    private Double total;
+@Document(collection = "reviews")
+public class Review {
 
-    // Getters and Setters
+    @Id
+    private String id;
 
-    public Long getId() {
-        return id;
+    @NotNull(message = "Customer cannot be null")
+    private Long customerId;
+
+    @NotNull(message = "Product cannot be null")
+    private Long productId;
+
+    @NotNull(message = "Store cannot be null")
+    private Long storeId;
+
+    @NotNull(message = "Rating cannot be null")
+    private Integer rating;
+
+    private String comment;
+
+    public Review() {}
+
+    public Review(Long customerId, Long productId, Long storeId, Integer rating, String comment) {
+        this.customerId = customerId;
+        this.productId = productId;
+        this.storeId = storeId;
+        this.rating = rating;
+        this.comment = comment;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
 
-    public String getName() {
-        return name;
-    }
+    public Long getCustomerId() { return customerId; }
+    public void setCustomerId(Long customerId) { this.customerId = customerId; }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public Long getProductId() { return productId; }
+    public void setProductId(Long productId) { this.productId = productId; }
 
-    public Double getPrice() {
-        return price;
-    }
+    public Long getStoreId() { return storeId; }
+    public void setStoreId(Long storeId) { this.storeId = storeId; }
 
-    public void setPrice(Double price) {
-        this.price = price;
-    }
+    public Integer getRating() { return rating; }
+    public void setRating(Integer rating) { this.rating = rating; }
 
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public Double getTotal() {
-        return total;
-    }
-
-    public void setTotal(Double total) {
-        this.total = total;
-    }
+    public String getComment() { return comment; }
+    public void setComment(String comment) { this.comment = comment; }
 }
